@@ -30,37 +30,49 @@ void Circle::add(const int& DATA) {
 
     count += 1;
 }
+
 void Circle::remove(const int& DATA) {
     if (count > 0) {
         Node* currNode = start;
-        Node* prevNode = nullptr;
         bool found = false;
 
-        while (currNode != nullptr && !found) {  /* find node in the circle */
-            if (currNode->getData() == DATA) {
+        while (currNode->getNext() != nullptr && !found) {
+            if (currNode->getNext()->getData() == DATA) {
                 found = true;
             }
             else {
-                prevNode = currNode;
                 currNode = currNode->getNext();
-
-                //std::cout << prevNode->getData() << std::endl;
-                //std::cout << currNode->getData() << std::endl;
             }
         }
-        if (!found) {                                   /* display message if not found */
+        if (!found) {
             std::cout << "Not found. " << std::endl;
         }
         else {
-            prevNode->setNext(currNode->getNext());
-            delete currNode;
+            std::cout << "Deleting " << currNode->getNext()->getData() << " ... " << std::endl;
+            
+            if (count == 1) {
+                std::cout << "Count is 1" << std::endl;
+                start = nullptr;
+            }
+            else {
+                if (currNode->getNext() == start) {
+                    currNode->setNext(start->getNext());
+                    delete start;
+                    start = currNode;
+                }
+                else {
+                    Node* temp = new Node(currNode->getNext()->getNext());
+                    delete currNode->getNext();
+                    currNode->setNext(temp);
+                    std::cout << "Set next to: " << currNode->getNext()->getData() << std::endl;
+                }
+            }
 
             count -= 1;
         }
     }
     else {
-        start = nullptr;
-        count -= 1;
+        std::cout << "No items in the list. " << std::endl;
     }
 }
 
@@ -68,9 +80,13 @@ void Circle::display() const {
     Node* currNode = start;
     int countCheck = 0;
 
+    std::cout << "----- LIST -----" << std::endl;
+
     while (currNode != nullptr && countCheck < count) {
         std::cout << currNode->getData() << std::endl;
         currNode = currNode->getNext();
         countCheck += 1;
     }
+
+    std::cout << "----------------" << std::endl << std::endl;
 }

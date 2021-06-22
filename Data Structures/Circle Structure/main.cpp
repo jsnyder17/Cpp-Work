@@ -3,25 +3,28 @@
 #include "Circle.h"
 
 int main(void) {
+    int i, j;
+
     Circle* circle = new Circle();
 
-    circle->add(1);
-    circle->add(2);
-    circle->add(3);
+    for (i = 0; i < 2; i++) {
+        for (j = 0; j < 10; j++) {
+            circle->add(j);
+        }
 
-    circle->display();
+        circle->display();
 
-    circle->remove(2);
+        std::cout << "BEFORE: " << sizeof(circle) << std::endl;
 
-    circle->display();
+        for(j = 0; j < 10; j++) {
+            circle->remove(j);
+            circle->display();
+        }
 
-    circle->remove(3);
+        circle->display();
 
-    circle->display();
-
-    circle->remove(1);
-
-    circle->display();
+        std::cout << "AFTER: " << sizeof(circle) << std::endl;
+    }
 
     return 0;
 }
