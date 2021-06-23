@@ -10,6 +10,10 @@ Node::Node(const int& DATA) {
     next = nullptr;
     this->data = DATA;
 }
+Node::Node(Node* node) {
+    this->next = node->next;
+    this->data = node->data;
+}
 Node::~Node() {
 
 }

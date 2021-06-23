@@ -7,6 +7,7 @@ class Node {
     public:
         Node();
         Node(const int& DATA);
+        Node(Node* node);
         virtual ~Node();
 
         Node* getNext() const;
